@@ -1,0 +1,3 @@
+# LLGZONE'BLOG
+
+持续更新中
