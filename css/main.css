@@ -1425,16 +1425,16 @@ pre .javascript .function {
   background: #222;
 }
 .posts-collapse .post-meta {
-  position: absolute;
+  position: relative;
   font-size: 12px;
   left: 20px;
-  top: 5px;
+  top: -7px;
 }
 .posts-collapse .post-comments-count {
   display: none;
 }
 .posts-collapse .post-title {
-  margin-left: 60px;
+  margin-left: 20px;
   font-size: 16px;
   font-weight: normal;
   line-height: inherit;
@@ -1830,7 +1830,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #24e40b;
+  background: #bfff4d;
 }
 .links-of-blogroll {
   font-size: 13px;
