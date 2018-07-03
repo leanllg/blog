@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[test]]></title>
-    <url>%2Fblog%2F2018%2F06%2F30%2Ftest%2F</url>
-    <content type="text"></content>
+    <title><![CDATA[Async and await]]></title>
+    <url>%2Fblog%2F2018%2F06%2F30%2FAsync-and-await%2F</url>
+    <content type="text"><![CDATA[Async 与 await 使用起来很是方便，然而其与 Promise, setTimeout联合使用时，要搞懂运行的顺序却不是那么的容易。先举两个例子。]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>Javascript</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[Hello World]]></title>
     <url>%2Fblog%2F2018%2F06%2F30%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
-      <categories>
-        <category>code</category>
-      </categories>
+    <content type="text"><![CDATA[欢迎大家来看我的博客，也欢迎各位加我的 QQ 交流技术上的问题^_^ QQ: 985395976]]></content>
       <tags>
         <tag>hello-world</tag>
       </tags>
