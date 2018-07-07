@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="Async 与 await 使用起来很是方便，然而其与 Promise, setTimeout联合使用时，要搞懂运行的顺序却不是那么的容易。先举两个例子。">
+<meta name="description" content="Async 与 await 使用起来很是方便，然而其与 Promise, setTimeout联合使用时，要搞懂运行的顺序却不是那么的容易。先举两个例子。（注：resolve 并不是代表已经 fullfilled，理解这点很重要） 123456789101112131415161718192021222324252627282930313233343536373839404142434445464">
 <meta name="keywords" content="Javascript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Async and await">
+<meta property="og:title" content="Async and await（前言）">
 <meta property="og:url" content="https://llgzone.github.io/blog/2018/06/30/Async-and-await/index.html">
 <meta property="og:site_name" content="LLGZONE&#39;s Blog">
-<meta property="og:description" content="Async 与 await 使用起来很是方便，然而其与 Promise, setTimeout联合使用时，要搞懂运行的顺序却不是那么的容易。先举两个例子。">
+<meta property="og:description" content="Async 与 await 使用起来很是方便，然而其与 Promise, setTimeout联合使用时，要搞懂运行的顺序却不是那么的容易。先举两个例子。（注：resolve 并不是代表已经 fullfilled，理解这点很重要） 123456789101112131415161718192021222324252627282930313233343536373839404142434445464">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-03T15:49:30.040Z">
+<meta property="og:image" content="https://llgzone.github.io/blog/2018/06/30/Async-and-await/1.png">
+<meta property="og:updated_time" content="2018-07-07T11:54:12.276Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Async and await">
-<meta name="twitter:description" content="Async 与 await 使用起来很是方便，然而其与 Promise, setTimeout联合使用时，要搞懂运行的顺序却不是那么的容易。先举两个例子。">
+<meta name="twitter:title" content="Async and await（前言）">
+<meta name="twitter:description" content="Async 与 await 使用起来很是方便，然而其与 Promise, setTimeout联合使用时，要搞懂运行的顺序却不是那么的容易。先举两个例子。（注：resolve 并不是代表已经 fullfilled，理解这点很重要） 123456789101112131415161718192021222324252627282930313233343536373839404142434445464">
+<meta name="twitter:image" content="https://llgzone.github.io/blog/2018/06/30/Async-and-await/1.png">
 
 
 
@@ -126,7 +128,7 @@
 
 
 
-  <title>Async and await | LLGZONE's Blog</title>
+  <title>Async and await（前言） | LLGZONE's Blog</title>
   
 
 
@@ -304,7 +306,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Async and await</h1>
+          <h1 class="post-title" itemprop="name headline">Async and await（前言）</h1>
         
 
         <div class="post-meta">
@@ -376,7 +378,15 @@
       
 
       
-        <p>Async 与 await 使用起来很是方便，然而其与 Promise, setTimeout联合使用时，要搞懂运行的顺序却不是那么的容易。先举两个例子。</p>
+        <p>Async 与 await 使用起来很是方便，然而其与 Promise, setTimeout联合使用时，要搞懂运行的顺序却不是那么的容易。先举两个例子。（注：resolve 并不是代表已经 fullfilled，理解这点很重要）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"start"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">t1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"t1 start"</span>)</span><br><span class="line"></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setTimeout in t1"</span>)</span><br><span class="line">  &#125;, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(<span class="string">"t1 end"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">t2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"t2 start"</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(<span class="string">"t2 end"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">asy1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"async start"</span>)</span><br><span class="line">  <span class="keyword">const</span> rt1 = <span class="keyword">await</span> t1()</span><br><span class="line">  <span class="built_in">console</span>.log(rt1)</span><br><span class="line">  <span class="keyword">const</span> rt2 = <span class="keyword">await</span> t2()</span><br><span class="line">  <span class="built_in">console</span>.log(rt2)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">asy1()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"p1 start"</span>)</span><br><span class="line"></span><br><span class="line">  resolve(<span class="string">"p1 then"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">p1.then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(val)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"setTimeout"</span>)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Promise</span>.resolve(<span class="string">"promise in setTimeout"</span>).then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(val)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"end"</span>)</span><br></pre></td></tr></table></figure>
+<p>运行结果如下图所示：</p>
+<p><img src="./1.png" align="left"></p>
+<p>上面的代码可能一开始看上去就会看上去感觉很晕的样子，但这段代码也就只是涉及到了事件循环，宏任务队列与微任务队列的知识而已，我们要注意以下几点:</p>
+<p>​    1. await 到底有什么作用呢? 具体的大家可以去阅读 <a href="https://tc39.github.io/ecmascript-asyncawait/#abstract-ops" target="_blank" rel="noopener">官方文档第二段</a>， 简而言之，执行到 await 时会继续执行其后面的代码， 然后切换执行上下文，执行 async 函数后的代码。然后根据返回值，如果是promise的话，加入微任务队列等待fullfilled 或 rejected并取得返回值，否则继续执行后续代码</p>
+<ol start="2">
+<li>node 的运行结果与浏览器是不同的，故会有所出入</li>
+</ol>
 
       
     </div>
@@ -397,7 +407,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://llgzone.github.io/blog/2018/06/30/Async-and-await/" title="Async and await">https://llgzone.github.io/blog/2018/06/30/Async-and-await/</a>
+    <a href="https://llgzone.github.io/blog/2018/06/30/Async-and-await/" title="Async and await（前言）">https://llgzone.github.io/blog/2018/06/30/Async-and-await/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -1151,13 +1161,13 @@
       var articles = db.collection('articles')
 
       //https://hexo.io/zh-tw/docs/variables.html
-      var isPost = 'Async and await'.length > 0
+      var isPost = 'Async and await（前言）'.length > 0
       var isArchive = '' === 'true'
       var isCategory = ''.length > 0
       var isTag = ''.length > 0
 
       if (isPost) { //is article page
-        var title = 'Async and await'
+        var title = 'Async and await（前言）'
         var doc = articles.doc(title)
 
         getCount(doc, true).then(appendCountTo($('.post-meta')))

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Async and await]]></title>
+    <title><![CDATA[Async and await（前言）]]></title>
     <url>%2Fblog%2F2018%2F06%2F30%2FAsync-and-await%2F</url>
-    <content type="text"><![CDATA[Async 与 await 使用起来很是方便，然而其与 Promise, setTimeout联合使用时，要搞懂运行的顺序却不是那么的容易。先举两个例子。]]></content>
+    <content type="text"><![CDATA[Async 与 await 使用起来很是方便，然而其与 Promise, setTimeout联合使用时，要搞懂运行的顺序却不是那么的容易。先举两个例子。（注：resolve 并不是代表已经 fullfilled，理解这点很重要） 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647console.log("start")function t1() &#123; console.log("t1 start") setTimeout(() =&gt; &#123; console.log("setTimeout in t1") &#125;, 0) return Promise.resolve("t1 end")&#125;function t2() &#123; console.log("t2 start") return Promise.resolve("t2 end")&#125;async function asy1() &#123; console.log("async start") const rt1 = await t1() console.log(rt1) const rt2 = await t2() console.log(rt2)&#125;asy1()const p1 = new Promise(resolve =&gt; &#123; console.log("p1 start") resolve("p1 then")&#125;)p1.then(val =&gt; &#123; console.log(val)&#125;)setTimeout(() =&gt; &#123; console.log("setTimeout") Promise.resolve("promise in setTimeout").then(val =&gt; &#123; console.log(val) &#125;)&#125;, 0)console.log("end") 运行结果如下图所示： 上面的代码可能一开始看上去就会看上去感觉很晕的样子，但这段代码也就只是涉及到了事件循环，宏任务队列与微任务队列的知识而已，我们要注意以下几点: ​ 1. await 到底有什么作用呢? 具体的大家可以去阅读 官方文档第二段， 简而言之，执行到 await 时会继续执行其后面的代码， 然后切换执行上下文，执行 async 函数后的代码。然后根据返回值，如果是promise的话，加入微任务队列等待fullfilled 或 rejected并取得返回值，否则继续执行后续代码 node 的运行结果与浏览器是不同的，故会有所出入]]></content>
       <categories>
         <category>前端</category>
       </categories>
