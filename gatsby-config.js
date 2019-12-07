@@ -3,7 +3,7 @@ module.exports = {
     title: `Lean's blog`,
     author: `Lean`,
     description: `Lingen's blog`,
-    siteUrl: 'blog.llgzone.com',
+    siteUrl: 'https://blog.llgzone.com',
   },
   plugins: [
     {
