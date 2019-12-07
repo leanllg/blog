@@ -1,13 +1,12 @@
 ---
 title: 深入了解 JS 对象
-date: 2019-03-01
-tags: Javascript
-categories: 前端
+date: '2019-12-07'
+description: 'javascript 对象介绍'
 ---
 
-​	Js 的数据类型分为两种，一种是基本类型：Undefined, Null, Boolean, Number, String, Symbol。另一种则是引用类型：Object。
+​ Js 的数据类型分为两种，一种是基本类型：Undefined, Null, Boolean, Number, String, Symbol。另一种则是引用类型：Object。
 
-​	对象有很多种类，函数也是对象，对象都会有一个 `__proto__`  属性获得对象的原型对象（在ES6标准中有提及，浏览器必须实现，其他环境不要求，不建议直接使用），还会有一个`constructor` 属性指向对象的构造函数。函数在创建的时候一般都会有`prototype` 属性（使用 bind 创建的函数无, 箭头函数也无）对于这几个属性，举几个例子：
+​ 对象有很多种类，函数也是对象，对象都会有一个 `__proto__` 属性获得对象的原型对象（在 ES6 标准中有提及，浏览器必须实现，其他环境不要求，不建议直接使用），还会有一个`constructor` 属性指向对象的构造函数。函数在创建的时候一般都会有`prototype` 属性（使用 bind 创建的函数无, 箭头函数也无）对于这几个属性，举几个例子：
 
 ```javascript
 // 实际使用推荐使用Object.getPrototypeOf()来获得原型对象.
@@ -31,13 +30,13 @@ Person.__proto__ === Function.prototype // true
 从以上几个例子，我们可以知道函数 prototype 是用来确定实例对象 `__proto__` 属性指向的，在构造函数生成实例对象的过程中需要用到 new 操作符，new 操作符其实是一个语法糖。实际实现代码
 
 ```javascript
-function _new (constructor, ...params) {
+function _new(constructor, ...params) {
   // 以下两行可以简化为 const object = Object.create(constructor.prototype)
   const object = {}
   object.__proto__ = constructor.prototype
-  
+
   const reObject = constructor.apply(object, params)
-  return (typeof reObject === 'object' && reObject !== null) ? reObject : object
+  return typeof reObject === 'object' && reObject !== null ? reObject : object
 }
 ```
 
@@ -45,18 +44,25 @@ function _new (constructor, ...params) {
 
 ```javascript
 function create(object, properties) {
-  function F(){}
+  function F() {}
   F.prototype = object
   const newObj = new F()
-  
+
   if (typeof properties === 'object') {
     Object.defineProperties(newObj, properties)
   }
-  
+
   return newObj
 }
 
-const llg = create({sayName() {console.log(this.name)}}, {name: {value: 'llg'}})
+const llg = create(
+  {
+    sayName() {
+      console.log(this.name)
+    },
+  },
+  { name: { value: 'llg' } }
+)
 llg.sayName() // llg
 ```
 
@@ -67,13 +73,15 @@ function inherit(subType, superType) {
   let prototype = Object.create(superType.prototype)
   prototype.constructor = subType
   subType.prototype = prototype
-  
+
   Object.setPrototypeOf
     ? Object.setPrototypeOf(subType, superType)
     : subType.__proto__ === superType
 }
 
-function Pet(name) {this.name = name}
+function Pet(name) {
+  this.name = name
+}
 Pet.prototype.getName = function() {
   console.log(this.name)
 }
@@ -104,21 +112,21 @@ class Person {
     this.name = name
     this._age = age
   }
-  
+
   //定义在 Person 上的方法
   static sayHello() {
     console.log('Hello World')
   }
-  
+
   // 以下方法相当于定义 Peron.prototype 上的方法
   get age() {
     return this._age
   }
-  
+
   set age(age) {
     this._age = age
   }
-  
+
   getName() {
     return this.name
   }
@@ -130,7 +138,7 @@ class Chinese extends Person {
     super(name, age)
     this.province = province
   }
-  
+
   static sayHello() {
     super.sayHello()
   }
@@ -138,31 +146,31 @@ class Chinese extends Person {
 
 const llg = new Chinese('llg', 21, 'WuHan')
 llg.getName()
-Chinese.sayHello()
+Chinese.sayHello()(
+  // 模块模式定义私有属性与静态属性
+  function(window) {
+    // 私有属性
+    const friends = []
 
-// 模块模式定义私有属性与静态属性
-(function(window) {
-  // 私有属性
-  const friends = []
-  
-  window.Person = class {
-    constructor(name) {
-      this.name = name
+    window.Person = class {
+      constructor(name) {
+        this.name = name
+      }
+
+      addFriends(...name) {
+        friends.push(...name)
+      }
+
+      friendsCount() {
+        return friends.length
+      }
     }
-    
-    addFriends(...name) {
-      friends.push(...name)
-    }
-    
-    friendsCount() {
-      return friends.length
+
+    window.Person.sayHello = function() {
+      console.log('Hello World!')
     }
   }
-  
-  window.Person.sayHello = function() {
-    console.log('Hello World!')
-  }
-})(window)
+)(window)
 
 Person.sayHello() // Hello World!
 const llg = new Person('llg')
@@ -170,7 +178,7 @@ llg.addFriends('l', 'l', 'g')
 llg.friendsCount() // 3
 ```
 
-在 ES6 的中使用 class 定义静态属性与私有属性的方法仍然与 ES5中一样 ，当然在之后的 ES 版本中将会给 class 加入私有属性与静态属性让 class 变得更为强大。ES6 的类声明虽然是 ES5 的构造函数形式的一个语法糖，但是它们之间存在着很多的差异：
+在 ES6 的中使用 class 定义静态属性与私有属性的方法仍然与 ES5 中一样 ，当然在之后的 ES 版本中将会给 class 加入私有属性与静态属性让 class 变得更为强大。ES6 的类声明虽然是 ES5 的构造函数形式的一个语法糖，但是它们之间存在着很多的差异：
 
 - 类声明默认在严格模式下，不能被提升
 - 类声明中定义的所有方法都是**不可枚举**的，在 ES5 中需通过 Object.defineProperty() 指定不可枚举
@@ -178,7 +186,7 @@ llg.friendsCount() // 3
 - 类的构造函数只能通过 new 调用，否则报错
 - 类内部不能修改类名
 
-在 ES6 中继承使用关键字 extends , 静态成员也可以被继承，extends后面可以接任意的表达式，而且还可以继承内建对象。
+在 ES6 中继承使用关键字 extends , 静态成员也可以被继承，extends 后面可以接任意的表达式，而且还可以继承内建对象。
 
 ```javascript
 // 继承内建对象 ES5 无法完成，如下代码 Babel 转义后运行会出错
@@ -212,4 +220,3 @@ class Rectangle extends Shape {
   }
 }
 ```
-
