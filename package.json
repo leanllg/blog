@@ -33,7 +33,8 @@
     "typeface-merriweather": "0.0.72",
     "typeface-montserrat": "0.0.75",
     "typography": "^0.16.19",
-    "typography-theme-wordpress-2016": "^0.16.19"
+    "typography-theme-wordpress-2016": "^0.16.19",
+    "yargs": "^15.0.2"
   },
   "devDependencies": {
     "prettier": "^1.19.1"
@@ -56,5 +57,8 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+  },
+  "bin": {
+    "post": "./scripts/post.js"
   }
 }
