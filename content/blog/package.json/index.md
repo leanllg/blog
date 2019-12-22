@@ -1,7 +1,6 @@
 ---
 title: package.json cook-book
 date: 2019-12-22
-description: undefined
 ---
 
 > 建一个 package.json 的索引供查看，下面以 npm 为例子，实际上 yarn 也是通用的
