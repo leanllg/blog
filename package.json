@@ -59,6 +59,6 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "bin": {
-    "post": "./scripts/post.js"
+    "blogpost": "./scripts/post.js"
   }
 }

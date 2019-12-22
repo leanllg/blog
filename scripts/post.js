@@ -44,7 +44,7 @@ let postMarkdown = `
 ---
 title: ${title[1]}
 date: ${now()}
-description: ${description}
+description: ${description || ''}
 ---
 `.trimLeft()
 
